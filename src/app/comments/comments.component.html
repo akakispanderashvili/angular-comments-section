@@ -1,0 +1,18 @@
+<div class="comment-section">
+  <div class="comment-block">
+    <app-comment
+      *ngFor="let comment of comments"
+      [comment]="comment"
+      [currentUser]="currentUser"
+      (commentEdited)="editComment($event)"
+      (scoreIncremented)="incrementCommentScore($event)"
+      (scoreDecremented)="decrementCommentScore($event)"
+      (commentDeleted)="deleteComment($event)"
+      (commentReplied)="replyComment($event, comment.id)"
+    ></app-comment>
+  </div>
+</div>
+
+
+
+

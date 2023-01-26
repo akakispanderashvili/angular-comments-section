@@ -1,0 +1,8 @@
+<div class="comment-section">
+  <div class="reply-input container">
+    <img src="{{ currentUser?.image?.webp }}" class="user-img" />
+    <textarea placeholder="Add a comment..."></textarea>
+    <button class="send-button" (click)="onAddCommentClick()">SEND</button>
+    <p>{{ comments }}</p>
+  </div>
+</div>

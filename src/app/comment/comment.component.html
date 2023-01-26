@@ -1,0 +1,76 @@
+<div [ngClass]="{ replies: comment.replyingTo }">
+  <div class="comment container">
+    <div class="comment-point">
+      <img
+        src="../../assets/images/icon-plus.svg"
+        class="point-control"
+        (click)="incrementScore(comment.id)"
+      />
+      <p id="firstScore" class="point-number">{{ comment.score }}</p>
+      <img
+        src="../../assets/images/icon-minus.svg"
+        class="point-control"
+        (click)="decrementScore(comment.id)"
+      />
+    </div>
+    <div class="comment-actions">
+      <a
+        (click)="onReplyClick(comment.id)"
+        class="reply"
+        *ngIf="comment.user?.username !== currentUser?.username"
+        ><img
+          src="../../assets/images/icon-reply.svg"
+          class="control-icon"
+        />Reply</a
+      >
+      <a
+        *ngIf="comment.user?.username == currentUser?.username"
+        class="delete"
+        (click)="onDeleteClick(comment.id)"
+        ><img
+          src="../../assets/images/icon-delete.svg"
+          class="control-icon"
+        />Delete</a
+      >
+      <a
+        *ngIf="comment.user?.username == currentUser?.username"
+        class="edit"
+        (click)="onEditClick(comment.id)"
+        ><img
+          src="../../assets/images/icon-edit.svg"
+          class="control-icon"
+        />Edit</a
+      >
+    </div>
+    <div *ngIf="comment.user as user" class="comment-user">
+      <img [src]="user.image.webp" class="user-img" />
+      <p class="user-name">{{ user.username }}</p>
+      <p *ngIf="user.username == currentUser?.username" class="you">you</p>
+      <p>{{ comment.createdAt }}</p>
+    </div>
+
+    <p class="comment-text">
+      {{ comment.content }}
+    </p>
+  </div>
+
+  <div>
+    <app-comment
+      *ngFor="let reply of comment.replies"
+      [comment]="reply"
+      [currentUser]="currentUser"
+    ></app-comment>
+
+    <app-add-comment
+      *ngIf="isReplying?.isActive && currentUser"
+      [currentUser]="currentUser"
+      (addCommentClicked)="onCommentReply($event)"
+    ></app-add-comment>
+  </div>
+
+  <app-popup
+    *ngIf="isDeleting?.isActive"
+    (cancelClicked)="onCancelDelete()"
+    (confirmClicked)="onConfirmDelete()"
+  ></app-popup>
+</div>
